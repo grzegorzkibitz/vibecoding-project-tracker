@@ -35,9 +35,17 @@ export const DEFAULT_ANCHORS = [
   },
 ];
 
-// Placeholders until PRD §8 / §11 are filled in.
-export const TEAM_NAME = 'Your team';
-export const TEAM = ['Teammate A', 'Teammate B', 'Teammate C'];
+// The team every browser starts with (see teams.js). Users are made up: they only
+// exist so tasks can be assigned to someone. Placeholders until PRD §8 / §11 are filled in.
+export const DEFAULT_TEAM = {
+  id: 'team-default',
+  name: 'Your team',
+  members: [
+    { id: 'teammate-a', name: 'Teammate A' },
+    { id: 'teammate-b', name: 'Teammate B' },
+    { id: 'teammate-c', name: 'Teammate C' },
+  ],
+};
 
 const today = new Date();
 const iso = (offsetDays) => {
@@ -53,7 +61,7 @@ export const SEED_TASKS = [
     description: 'Render the columns and task cards.',
     type: 'feature',
     status: 'in-progress',
-    assignee: TEAM[0],
+    assignee: DEFAULT_TEAM.members[0].id,
     dueDate: iso(2),
     createdDate: iso(-1),
     goals: [],
@@ -64,7 +72,7 @@ export const SEED_TASKS = [
     description: 'Dialog ignores the Escape key.',
     type: 'bug',
     status: 'todo',
-    assignee: TEAM[1],
+    assignee: DEFAULT_TEAM.members[1].id,
     dueDate: iso(-1),
     createdDate: iso(-3),
     // Demo goal history (PRD DR-10): several goals, mixed outcomes.
@@ -96,7 +104,7 @@ export const SEED_TASKS = [
     description: 'Markdown output for a task and its goals.',
     type: 'feature',
     status: 'review',
-    assignee: TEAM[2],
+    assignee: DEFAULT_TEAM.members[2].id,
     dueDate: null,
     createdDate: iso(-2),
     goals: [],
@@ -107,7 +115,7 @@ export const SEED_TASKS = [
     description: 'Graphite via tweakcn.',
     type: 'feature',
     status: 'done',
-    assignee: TEAM[1],
+    assignee: DEFAULT_TEAM.members[1].id,
     dueDate: iso(-2),
     createdDate: iso(-5),
     goals: [],

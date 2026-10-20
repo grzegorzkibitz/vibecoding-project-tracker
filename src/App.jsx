@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useProjects } from '@/hooks/useProjects';
-import { TEAM_NAME } from '@/lib/defaults';
+import { useTeams } from '@/hooks/useTeams';
+import { teamFor } from '@/lib/teams';
 import { Toaster, toast } from '@/components/ui/sonner';
 import Sidebar from '@/components/Sidebar';
 import ProjectWorkspace from '@/components/ProjectWorkspace';
 import ProjectDialog from '@/components/ProjectDialog';
+import TeamsDialog from '@/components/TeamsDialog';
 
 /**
  * Vibecoding Project Tracker.
@@ -15,8 +17,11 @@ import ProjectDialog from '@/components/ProjectDialog';
  */
 export default function App() {
   const projects = useProjects();
+  const teams = useTeams();
+  const team = teamFor(teams.teams, projects.current);
   const [collapsed, setCollapsed] = useLocalStorage('vibetracker.sidebarCollapsed', false);
-  const [managingLists, setManagingLists] = useState(false);
+  // Sidebar dialogs: null, 'lists' or 'teams'.
+  const [sidebarDialog, setSidebarDialog] = useState(null);
   // null = closed, 'new' = create, 'settings' = rename / delete the open project.
   const [projectDialog, setProjectDialog] = useState(null);
 
@@ -36,10 +41,10 @@ export default function App() {
       </a>
 
       <Sidebar
-        teamName={TEAM_NAME}
+        teamName={team.name}
         collapsed={collapsed}
         onToggle={() => setCollapsed((c) => !c)}
-        onManageLists={() => setManagingLists(true)}
+        onAction={setSidebarDialog}
         projects={projects.projects}
         currentProject={projects.current}
         onOpenProject={openProject}
@@ -50,8 +55,9 @@ export default function App() {
       <ProjectWorkspace
         key={projects.current.id}
         project={projects.current}
-        managingLists={managingLists}
-        onCloseLists={() => setManagingLists(false)}
+        team={team}
+        managingLists={sidebarDialog === 'lists'}
+        onCloseLists={() => setSidebarDialog(null)}
       />
 
       {projectDialog && (
@@ -59,8 +65,19 @@ export default function App() {
           mode={projectDialog}
           project={projects.current}
           manager={projects}
+          teams={teams.teams}
+          currentTeamId={team.id}
           onClose={() => setProjectDialog(null)}
           onDone={() => toast.dismiss()}
+        />
+      )}
+
+      {sidebarDialog === 'teams' && (
+        <TeamsDialog
+          manager={teams}
+          projects={projects.projects}
+          initialTeamId={team.id}
+          onClose={() => setSidebarDialog(null)}
         />
       )}
 

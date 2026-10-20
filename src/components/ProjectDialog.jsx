@@ -11,7 +11,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
-import { Input, Label } from '@/components/ui/field';
+import { Input, Label, Select } from '@/components/ui/field';
 
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
@@ -19,9 +19,10 @@ const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
  * Create a project (`mode` 'new') or rename / delete the open one ('settings').
  * `manager` is the object returned by useProjects.
  */
-export default function ProjectDialog({ mode, project, manager, onClose, onDone }) {
+export default function ProjectDialog({ mode, project, manager, teams, currentTeamId, onClose, onDone }) {
   const creating = mode === 'new';
   const [name, setName] = useState(creating ? '' : project.name);
+  const [teamId, setTeamId] = useState(currentTeamId);
   const [error, setError] = useState('');
   const isLast = manager.projects.length <= 1;
   const tasks = creating ? 0 : manager.taskCount(project.id);
@@ -29,7 +30,12 @@ export default function ProjectDialog({ mode, project, manager, onClose, onDone 
   function submit(e) {
     e.preventDefault();
     try {
-      creating ? manager.create(name) : manager.rename(project.id, name);
+      if (creating) {
+        manager.create(name, teamId);
+      } else {
+        manager.rename(project.id, name);
+        if (teamId !== currentTeamId) manager.setTeam(project.id, teamId);
+      }
     } catch (err) {
       setError(err.message);
       return;
@@ -51,7 +57,7 @@ export default function ProjectDialog({ mode, project, manager, onClose, onDone 
         <DialogDescription>
           {creating
             ? 'A new project gets its own board, deliverable links and lists, starting from the defaults.'
-            : 'Rename this project or delete it.'}
+            : 'Rename this project, change its team, or delete it.'}
         </DialogDescription>
 
         <form onSubmit={submit} noValidate className="mt-4 space-y-4">
@@ -73,6 +79,23 @@ export default function ProjectDialog({ mode, project, manager, onClose, onDone 
                 {error}
               </p>
             )}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="project-team">Team</Label>
+            <Select
+              id="project-team"
+              value={teamId}
+              onChange={(e) => setTeamId(e.target.value)}
+              aria-describedby="project-team-hint"
+            >
+              {teams.map((t) => (
+                <option key={t.id} value={t.id}>{t.name}</option>
+              ))}
+            </Select>
+            <p id="project-team-hint" className="text-xs text-muted-foreground">
+              Tasks can be assigned to this team's users. Add teams and users from Teams in the sidebar.
+            </p>
           </div>
 
           <div className="flex items-center justify-between pt-2">

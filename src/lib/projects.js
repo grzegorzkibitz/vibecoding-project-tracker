@@ -85,8 +85,13 @@ export function loadIndex(storage) {
 }
 
 /** New empty project (default lists, no tasks, no links). It becomes the open project. */
-export function createProject(storage, index, name) {
-  const project = { id: newId(), name: cleanName(index.projects, name), createdAt: new Date().toISOString() };
+export function createProject(storage, index, name, teamId) {
+  const project = {
+    id: newId(),
+    name: cleanName(index.projects, name),
+    teamId,
+    createdAt: new Date().toISOString(),
+  };
   storage.set(projectKey(project.id, 'tasks'), []);
   storage.set(projectKey(project.id, 'anchors'), DEFAULT_ANCHORS.map((a) => ({ ...a, url: null })));
   const next = { projects: [...index.projects, project], currentId: project.id };
@@ -97,6 +102,13 @@ export function createProject(storage, index, name) {
 export function renameProject(storage, index, id, name) {
   const clean = cleanName(index.projects, name, id);
   const next = { ...index, projects: index.projects.map((p) => (p.id === id ? { ...p, name: clean } : p)) };
+  storage.set(INDEX_KEY, next);
+  return next;
+}
+
+/** Change which team a project uses (whose users can be assigned its tasks). */
+export function setProjectTeam(storage, index, id, teamId) {
+  const next = { ...index, projects: index.projects.map((p) => (p.id === id ? { ...p, teamId } : p)) };
   storage.set(INDEX_KEY, next);
   return next;
 }

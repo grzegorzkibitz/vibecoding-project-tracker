@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { dueStatus } from '@/lib/due';
+import { assigneeName, memberFor } from '@/lib/teams';
 
 const TYPE_STYLES = {
   feature: { icon: Sparkles, stripe: 'before:bg-type-feature', text: 'text-type-feature' },
@@ -96,7 +97,7 @@ function CardView({ task, typeLabel, isDone, team, onOpen, onHandoff, overlay, n
       <div className="flex items-center gap-1.5 px-4 pb-3">
         <User aria-hidden="true" className="size-3 shrink-0 text-muted-foreground" />
         {overlay ? (
-          <span className="text-xs text-muted-foreground">{task.assignee}</span>
+          <span className="text-xs text-muted-foreground">{assigneeName(team, task.assignee)}</span>
         ) : (
           <>
             {/* M7: owner + one-step handoff. Outside the card button so it isn't a nested control. */}
@@ -105,14 +106,13 @@ function CardView({ task, typeLabel, isDone, team, onOpen, onHandoff, overlay, n
             </label>
             <select
               id={`owner-${task.id}`}
-              value={task.assignee}
-              onChange={(e) => onHandoff(task, e.target.value)}
+              value={memberFor(team, task.assignee)?.id ?? ''}
+              onChange={(e) => onHandoff(task, e.target.value || null)}
               className="h-7 max-w-full rounded-md border border-transparent bg-transparent pr-1 text-xs text-muted-foreground hover:border-input hover:bg-card hover:text-foreground focus-visible:border-input"
             >
-              {/* Keep an unknown owner selectable (e.g. old data) so the value isn't silently changed. */}
-              {!team.includes(task.assignee) && <option value={task.assignee}>{task.assignee}</option>}
-              {team.map((name) => (
-                <option key={name} value={name}>{name}</option>
+              <option value="">Unassigned</option>
+              {team.members.map((m) => (
+                <option key={m.id} value={m.id}>{m.name}</option>
               ))}
             </select>
           </>

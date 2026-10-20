@@ -13,7 +13,7 @@ import {
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
 import { Input, Label, Select, Textarea } from '@/components/ui/field';
-import { TEAM } from '@/lib/defaults';
+import { assigneeName, memberFor } from '@/lib/teams';
 import GoalsEditor from '@/components/GoalsEditor';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -24,7 +24,7 @@ function blankTask(lists) {
     description: '',
     type: lists.types[0].id,
     status: lists.columns[0].id,
-    assignee: TEAM[0],
+    assignee: null,
     dueDate: null,
     goals: [],
   };
@@ -34,7 +34,7 @@ function blankTask(lists) {
  * Add / edit / delete a task (M5) and its goals (M9). `task` null = add mode.
  * Mount with a changing `key` so the form state resets for each task.
  */
-export default function TaskDialog({ task, lists, onSave, onDelete, onClose }) {
+export default function TaskDialog({ task, lists, team, onSave, onDelete, onClose }) {
   const editing = Boolean(task);
   const [form, setForm] = useState(() => ({ ...blankTask(lists), ...task, goals: task?.goals ?? [] }));
   const [error, setError] = useState('');
@@ -49,6 +49,7 @@ export default function TaskDialog({ task, lists, onSave, onDelete, onClose }) {
     const snapshot = {
       ...form,
       title: form.title.trim() || 'Untitled task',
+      assignee: assigneeName(team, form.assignee),
       goals: form.goals.filter((g) => g.prompt.trim()),
     };
     try {
@@ -136,9 +137,14 @@ export default function TaskDialog({ task, lists, onSave, onDelete, onClose }) {
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="task-assignee">Assignee</Label>
-              <Select id="task-assignee" value={form.assignee} onChange={set('assignee')}>
-                {TEAM.map((name) => (
-                  <option key={name} value={name}>{name}</option>
+              <Select
+                id="task-assignee"
+                value={memberFor(team, form.assignee)?.id ?? ''}
+                onChange={(e) => setForm((f) => ({ ...f, assignee: e.target.value || null }))}
+              >
+                <option value="">Unassigned</option>
+                {team.members.map((m) => (
+                  <option key={m.id} value={m.id}>{m.name}</option>
                 ))}
               </Select>
             </div>

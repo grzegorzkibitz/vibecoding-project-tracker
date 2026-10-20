@@ -1,5 +1,5 @@
 import {
-  KanbanSquare, Anchor, ListChecks, PanelLeftClose, PanelLeftOpen, FolderKanban, Plus, Settings,
+  KanbanSquare, Anchor, ListChecks, PanelLeftClose, PanelLeftOpen, FolderKanban, Plus, Settings, Users,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -9,13 +9,32 @@ const ITEMS = [
   { id: 'board', label: 'Board', icon: KanbanSquare },
   { id: 'anchors', label: 'Deliverables', icon: Anchor },
   { id: 'lists', label: 'Manage lists', icon: ListChecks, action: true },
+  { id: 'teams', label: 'Teams', icon: Users, action: true },
 ];
+
+/**
+ * Jump to a section on the page: scroll it into view, move focus there (so Tab
+ * carries on from it) and outline it briefly, so the jump is visible even when
+ * the section is already on screen.
+ */
+function jumpTo(e, id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  e.preventDefault();
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  el.focus({ preventScroll: true });
+  el.classList.remove('jump-highlight');
+  void el.offsetWidth; // restart the highlight if clicked again
+  el.classList.add('jump-highlight');
+  setTimeout(() => el.classList.remove('jump-highlight'), 1500);
+}
 
 export default function Sidebar({
   teamName,
   collapsed,
   onToggle,
-  onManageLists,
+  onAction,
   projects,
   currentProject,
   onOpenProject,
@@ -104,7 +123,7 @@ export default function Sidebar({
                 <li key={id}>
                   <button
                     type="button"
-                    onClick={onManageLists}
+                    onClick={() => onAction(id)}
                     aria-haspopup="dialog"
                     title={collapsed ? label : undefined}
                     className="flex min-h-10 w-full items-center gap-3 rounded-md px-3 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -119,6 +138,7 @@ export default function Sidebar({
               <li key={id}>
                 <a
                   href={soon ? undefined : `#${id}`}
+                  onClick={soon ? undefined : (e) => jumpTo(e, id)}
                   aria-current={active ? 'page' : undefined}
                   aria-disabled={soon ? 'true' : undefined}
                   title={collapsed ? label : undefined}
@@ -145,6 +165,7 @@ export default function Sidebar({
 
       <div className="border-t p-2">
         <p className={cn('truncate px-3 pb-2 text-xs text-muted-foreground', collapsed && 'sr-only')}>
+          <span className="sr-only">Team: </span>
           {teamName}
         </p>
         <button

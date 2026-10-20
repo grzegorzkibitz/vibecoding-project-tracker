@@ -35,7 +35,7 @@
  * @property {string} description
  * @property {string} type          id in lists.types
  * @property {string} status        id in lists.columns
- * @property {string} assignee
+ * @property {string|null} assignee  id of a user in the project's team; null = Unassigned
  * @property {string|null} dueDate  ISO 'YYYY-MM-DD'
  * @property {string} createdDate   ISO 'YYYY-MM-DD'
  * @property {Goal[]} goals

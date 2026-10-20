@@ -70,6 +70,11 @@
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
 
+  /* Sidebar jump target: a short outline so the user sees where they landed. */
+  .jump-highlight {
+    @apply rounded-lg outline outline-2 outline-offset-4 outline-primary;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

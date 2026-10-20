@@ -247,6 +247,69 @@ From `STAGES.md`, as of 2026-10-20:
 - [ ] Remove every "soon" placeholder from the sidebar, or build it. A dead link looks incomplete.
 - [ ] Every requirement from §6 is clickable. Go down the table and test each one.
 
+### 7a-ii. Screen reader checks (to do later)
+
+The code is built for screen readers (see `ACCESSIBILITY.md` §1), but it **hasn't been tested with one yet**. Do this before you submit, and keep the results as evidence for NFR-01, NFR-02 and the persona SH-06.
+
+**Setup**
+
+- [ ] Install **NVDA** (free, Windows): https://www.nvaccess.org. Start it with Ctrl+Alt+N, stop it with Insert+Q.
+- [ ] Use Chrome or Firefox, open the deployed link, and **put the mouse away**. Keyboard only.
+- [ ] Tip: Insert+F7 opens NVDA's list of headings, links and landmarks, a quick way to check the page structure.
+
+**Page structure**
+
+- [ ] First Tab lands on "Skip to main content", and pressing Enter jumps to the board.
+- [ ] Headings list shows the project name and one heading per column (To Do, In Progress, …).
+- [ ] Landmarks list shows "Main" navigation and the main region.
+- [ ] Column counts read as "Tasks: 3", not just "3".
+- [ ] Icons are silent. You should never hear "image" or "graphic".
+
+**Task cards**
+
+- [ ] Tabbing onto a card reads its title, type, goal count and due state, e.g. "Overdue 2d".
+- [ ] The owner dropdown reads "Owner of *task*. Change to hand it off."
+- [ ] The drag handle reads "Move *task* to another column", then the instructions.
+
+**Drag and drop by keyboard** (the most important check)
+
+- [ ] On the drag handle, Space → hear "Picked up *task*."
+- [ ] Right arrow → hear "*task* is over In Progress." (and so on for each column).
+- [ ] Space → hear "Dropped *task* in In Progress." The toast "Moved to In Progress." is also read.
+- [ ] Repeat, then press Esc → hear "Cancelled. *task* did not move."
+- [ ] Move a card into Done → hear the drop and "Moved to Done." The confetti is visual only, so this speech is how screen-reader users get the same moment.
+
+**Dialogs and forms**
+
+- [ ] "+ Task" opens the dialog, NVDA reads "New task", and focus is in the Title field.
+- [ ] Every field reads its label (Title, Description, Type, Status, Assignee, Due date).
+- [ ] Save with an empty title → hear "Give the task a title." and focus goes back to Title.
+- [ ] Esc closes the dialog, and focus returns to the button that opened it.
+- [ ] Tab can't escape the open dialog to the board behind it (focus trap).
+- [ ] "Copy as Prompt Context" → hear "Copied to clipboard. Paste it into your AI tool."
+- [ ] Delete → confirm dialog reads "Delete this task? You can't undo."
+
+**Other screens**
+
+- [ ] Handoff via the owner dropdown → hear "Handed off to *name*." Tab reaches the toast's Undo button.
+- [ ] Manage Lists: tabs read as "tab, 1 of 2", and the arrow keys switch tabs.
+- [ ] Goals accordion reads "expanded" / "collapsed".
+- [ ] Sidebar collapse button reads "Collapse sidebar" / "Expand sidebar", and the nav items still read their names when collapsed.
+- [ ] Anchor Board links read "(opens in a new tab)".
+
+**Automated scan**
+
+- [ ] Run **axe DevTools** (free browser extension) on the board, the open task dialog and the Manage Lists dialog. Aim for 0 issues, and screenshot the result.
+- [ ] Optional: Chrome Lighthouse → Accessibility score, and screenshot it.
+
+**Record the evidence**
+
+- [ ] Make a short table: check · expected · what NVDA said · pass/fail. Put it in an appendix.
+- [ ] Fix anything that fails, and note it as a design iteration (good for marks).
+- [ ] Optional: a short screen recording with NVDA's speech viewer on (NVDA menu → Tools → Speech viewer) shows what was read.
+- [ ] Update `ACCESSIBILITY.md` §1.5 to remove "No formal screen-reader audit yet".
+- [ ] Update the line in §7b below ("Why a status dropdown instead of drag-and-drop"). The app now has **both**: keyboard drag and drop *and* the status dropdown. Justify both.
+
 ### 7b. Write-up checklist
 
 - [ ] **Link** near the top of Part 2, plus one line on how to use it ("opens on the team board; click a card to see its goals").

@@ -13,8 +13,9 @@ export function useProjects(storage = ops.browserStorage) {
     projects: index.projects,
     current,
     open: (id) => setIndex(ops.openProject(storage, index, id)),
-    create: (name) => setIndex(ops.createProject(storage, index, name)),
+    create: (name, teamId) => setIndex(ops.createProject(storage, index, name, teamId)),
     rename: (id, name) => setIndex(ops.renameProject(storage, index, id, name)),
+    setTeam: (id, teamId) => setIndex(ops.setProjectTeam(storage, index, id, teamId)),
     remove: (id) => setIndex(ops.deleteProject(storage, index, id)),
     taskCount: (id) => ops.taskCount(storage, id),
   };

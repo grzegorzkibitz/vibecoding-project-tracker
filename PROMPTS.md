@@ -30,3 +30,11 @@ Record of every prompt given in this project, with date and model used.
 | 24 | 2026-10-20 | Opus 5.5 | yes. Is this still accisbility compliant? |
 | 25 | 2026-10-20 | Opus 5.5 | Add multi project support |
 | 26 | 2026-10-20 | Opus 5.5 | implement the project selection |
+| 27 | 2026-10-20 | Opus 5.5 | Add confetti when a card is moved into done |
+| 28 | 2026-10-20 | Opus 5.5 | Create a .md docuemnt which specifies the accessibility of the app. Say how it's acessible, the UX/UI patterns, How it hooks the user (triggers, actions), rewarding the user with visual apperances |
+| 29 | 2026-10-20 | Opus 5.5 | make a note of screen reader stuff in thr assessment md so i know what i need to check for late]r |
+| 30 | 2026-10-20 | Opus 5.5 | when i mark something as done or move it into the done column, there is no confeetti on the screen. |
+| 31 | 2026-10-20 | Opus 5.5 | Add a teams feature. you can create teams and users. the users are like fake users which you can assign issues to on the kanban board |
+| 32 | 2026-10-20 | Opus 5.5 | Clicking on deliverables does nothing is there a stage of where the implementation was? |
+| 33 | 2026-10-20 | Opus 5.5 | Add a additonal deliverable which is customisable. you can create a header and add link / text |
+| 34 | 2026-10-20 | Opus 5.5 | Make it into a modal |
