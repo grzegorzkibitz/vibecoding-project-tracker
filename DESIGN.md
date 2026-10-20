@@ -1,114 +1,138 @@
 # Vibecoding Project Tracker — Design
 
-**Status:** Hackathon starter design doc · fill in the **`<TODO>`** sections before you tag `design-done`.
-
-**Why this file exists.** This tracker is your tool. It should look like *your* tool — not a generic Kanban with default Tailwind blue. Twenty minutes of design decisions here will be visible on every screen for the next six weeks of Module 5.
-
-**Who owns this.** Person B, during the same window the rest of the team is reviewing the PRD. By the time the team converges to start M4 (`data-model`), this file should be filled in and the colors should already be in `tailwind.config.js`.
+**Status:** Draft for sign-off · design system settled on shadcn/ui + the tweakcn **Graphite** theme, with the accessibility fixes below.
 
 ---
 
 ## 1. Mood / vibe
 
-One sentence that captures the feeling the tracker should leave you with.
-
-`<TODO>`
-
-Two or three references that capture the vibe (links to dribbble shots, screenshots of apps you admire, Pinterest boards — anything visual):
-
-- `<TODO>`
-- `<TODO>`
-- `<TODO>`
+Minimal, quiet and modern: a graphite-grey workspace where the tasks are the only things competing for attention.
 
 Anti-references — what we are explicitly **not** trying to look like:
 
-- `<TODO>`
+- Default Tailwind blue dashboards.
+- Busy Jira-style boards with badges and colour everywhere.
 
-## 2. Color palette
+## 2. Design system
 
-These are the colors the build milestones will reference. Once chosen, paste the hex values into `tailwind.config.js` so the rest of the team can use Tailwind utility classes (e.g. `bg-brand-primary`, `border-due-warning`).
+- **Library:** shadcn/ui components (Button, Dialog, Input, Textarea, Select, Badge, Card, Label, Sonner toast, AlertDialog for delete confirm).
+- **Theme:** tweakcn **Graphite** (`https://tweakcn.com/r/themes/graphite.json`), radius `0.35rem`, light mode only (see §7).
+- **Tailwind:** stay on Tailwind 3 (already configured). Theme variables are mapped in `tailwind.config.js` as `var(--token)` directly, so opacity modifiers like `bg-primary/50` are not available. Use a separate token instead.
 
-### Brand
+### Accessibility review of Graphite (light mode, WCAG 2.2 AA)
 
-| Token | Hex | Where it shows up |
+Ratios computed from the theme's OKLCH values.
+
+| Pair | Ratio | Verdict |
 |---|---|---|
-| `brand-primary` | `<TODO>` | Header, "+" button, focus rings |
-| `brand-accent` | `<TODO>` | Highlights, hover states, links |
-| `surface-page` | `<TODO>` | Page background |
-| `surface-card` | `<TODO>` | Card background |
-| `text-primary` | `<TODO>` | Body text |
-| `text-muted` | `<TODO>` | Captions, dates, counts |
+| foreground on background | 11.1 | Pass |
+| muted-foreground on background / card | 5.0 / 5.3 | Pass (barely) |
+| muted-foreground on `muted` fill | **4.1** | **Fail** for 14 px text |
+| primary-foreground on primary | 6.3 | Pass |
+| primary button vs page (3:1 UI) | 5.5 | Pass |
+| destructive on background | 4.5 | Borderline |
+| **border vs background / card** | **1.35 / 1.41** | **Fail** (needs 3:1 for UI boundaries) |
+| **input fill vs background** | **1.16** | **Fail** (field is almost invisible) |
+| dark: muted-foreground on card | **4.1** | **Fail** |
+| dark: white on destructive | **3.4** | **Fail** |
+
+**Main criticisms for this app**
+
+1. **It has no colour, but this app needs it.** Graphite is almost pure greyscale; the only tint is a barely-there teal. Our features (feature vs bug, due safe/warning/overdue) are *status colours*. We must add our own semantic colours, or the board turns into grey cards that can't be told apart.
+2. **Low-contrast borders and inputs.** Cards sit on the page with a 1.4:1 edge. Form fields in the task modal are close to invisible. Fixed below.
+3. **Muted text is the weakest link.** Dates, counts and captions use `muted-foreground`, which passes only on card/page, and fails on muted fills.
+4. **`accent` (0.81) is heavy** for a hover colour and swallows borders. We use `secondary` for hover instead.
+5. **Inconsistent font:** the light block specifies Montserrat while the theme block and dark mode say Inter. We pick Inter.
+6. **Greys carry hierarchy; users with low vision lose it.** Never rely on colour alone (see rules).
+
+### Overrides to the Graphite values
+
+| Token | Graphite | Ours | Why |
+|---|---|---|---|
+| `border` | `oklch(0.8576 0 0)` | `oklch(0.70 0 0)` | ≥3:1 against page and card |
+| `input` | `oklch(0.9067 0 0)` | `oklch(0.70 0 0)` | Visible field boundaries |
+| `muted-foreground` | `oklch(0.5103 0 0)` | `oklch(0.45 0 0)` | Passes on muted fills too |
+| `destructive` | `oklch(0.5594 0.19 25.86)` | `oklch(0.50 0.19 26)` | 6:1 on card |
+
+Everything else stays exactly as in Graphite.
+
+## 3. Colours
+
+### Brand (all from Graphite)
+
+| Token | Value | Where it shows up |
+|---|---|---|
+| `primary` | `oklch(0.4891 0 0)` | "+ Task" button, focus ring |
+| `background` | `oklch(0.9551 0 0)` | Page |
+| `card` | `oklch(0.9702 0 0)` | Cards, columns, modal |
+| `foreground` | `oklch(0.3211 0 0)` | Body text |
+| `muted-foreground` | `oklch(0.45 0 0)` | Captions, dates, counts |
+| `secondary` | `oklch(0.9067 0 0)` | Column headers, hover |
 
 ### Task type (M6 `tag-style`)
 
-| Token | Hex | When used |
-|---|---|---|
-| `type-feature` | `<TODO>` | Cards tagged `feature` (accent stripe + icon) |
-| `type-bug` | `<TODO>` | Cards tagged `bug` (accent stripe + icon) |
+| Token | Value | Contrast on card | Used for |
+|---|---|---|---|
+| `type-feature` | `oklch(0.46 0.06 196)` | 6.3 | Feature stripe + icon (Sparkles) |
+| `type-bug` | `oklch(0.50 0.19 26)` | 6.1 | Bug stripe + icon (Bug) |
 
 ### Due-date states (M8 `due-tint`)
 
-| Token | Hex | When used |
-|---|---|---|
-| `due-safe` | `<TODO>` | More than 2 days out |
-| `due-warning` | `<TODO>` | Less than 24 hours |
-| `due-overdue` | `<TODO>` | Past due |
-| `due-neutral` | `<TODO>` | Done (overrides date) |
+| Token | Value | Contrast on card | When used |
+|---|---|---|---|
+| `due-safe` | `oklch(0.46 0.11 150)` | 6.2 | More than 2 days out |
+| `due-warning` | `oklch(0.50 0.11 70)` | 5.6 | Less than 24 hours |
+| `due-overdue` | `oklch(0.50 0.19 26)` | 6.1 | Past due |
+| `due-neutral` | `oklch(0.45 0 0)` | 5.3 | Done (overrides date) |
 
-## 3. Typography
+Colour is used for the text, stripe and icon of a state, never as the only signal. The tint is a pale background wash. Each state also carries a label ("Due today", "Overdue 2d") so it works in greyscale.
+
+## 4. Typography
 
 | Role | Font | Why |
 |---|---|---|
-| Heading | `<TODO>` | `<TODO one sentence>` |
-| Body | `<TODO>` | `<TODO one sentence>` |
-| Monospace (tags, badges, code) | `<TODO>` | `<TODO one sentence>` |
-
-Suggested sizes (override only if the design demands it):
+| Heading | Inter (semibold) | One family keeps it minimal; weight carries hierarchy. |
+| Body | Inter | Highly legible at 14 px. |
+| Monospace (tags, badges, code) | Fira Code | Graphite's mono; fits the vibecoding/prompt theme. |
 
 - Page title: 24 px / semibold
 - Section header: 16 px / semibold uppercase
 - Card title: 14 px / medium
 - Body: 14 px / regular
-- Caption: 12 px / regular muted
+- Caption: 12 px / regular, `muted-foreground` (never lighter)
 
-## 4. Component principles
+## 5. Component principles
 
-One short sentence per element. These set the tone for the build phase — Person A's modal and Person B's anchor board should both feel like they came from this doc.
+- **Cards:** Flat, 1 px `border`, no shadow except a soft one on hover; 4 px left stripe for task type.
+- **Buttons:** Solid `primary` fill, no gradient, `rounded-md`, 40 px min height; secondary buttons are outlined.
+- **Modal:** shadcn Dialog, centered, max-width-md, backdrop at 50% black, focus trapped, Esc closes.
+- **Empty states:** Dashed border, muted text, never sad.
+- **Drag affordance:** None. Status changes with a dropdown (keyboard accessible).
+- **Focus:** 2 px `ring` offset 2 px on every interactive element. Never remove outlines.
+- **Targets:** at least 24×24 px.
 
-- **Cards:** `<TODO>` (e.g. "Light, almost weightless; the only weight is from a 1px border, no shadow except on hover.")
-- **Buttons:** `<TODO>` (e.g. "Solid fill, no gradient, generous padding, rounded-md.")
-- **Modal:** `<TODO>` (e.g. "Centered, max-width-md, slate-900 backdrop at 50% opacity.")
-- **Empty states:** `<TODO>` (e.g. "Dashed border, muted text, never sad.")
-- **Drag affordance (if used):** `<TODO>` (e.g. "None — we use a status dropdown.")
-
-## 5. Voice / microcopy
-
-Three lines of microcopy that capture the tone of the product. Keep it short — these are the words a stressed user reads at 11pm.
+## 6. Voice / microcopy
 
 | Where | Text |
 |---|---|
-| "+" button label | `<TODO>` (e.g. "+ Task" or "Add task" or "New") |
-| Empty column placeholder | `<TODO>` (e.g. "Nothing here yet — keep going.") |
-| Toast after "Copy as Prompt Context" | `<TODO>` (e.g. "Copied. Now paste it into the AI.") |
-| Confirm-delete message | `<TODO>` (e.g. "Delete this task? You can't undo.") |
-| Handoff toast (M7 `task-owner`) | `<TODO>` (e.g. "Handed off to {name}. They've got it.") |
+| "+" button label | + Task |
+| Empty column placeholder | Nothing here yet. |
+| Toast after "Copy as Prompt Context" | Copied. Now paste it into the AI. |
+| Confirm-delete message | Delete this task? You can't undo. |
+| Handoff toast (M7 `task-owner`) | Handed off to {name}. |
 
-## 6. Logo / wordmark
+## 7. Product name
 
-The tracker probably doesn't need a logo, but it does need a name and a wordmark style.
+- **Product name:** Vibe Tracker (placeholder until PRD §11 is filled)
+- **Wordmark style:** The name in Inter semibold, `foreground` colour, no icon.
 
-- **Product name:** `<TODO>` (match PRD §11 team identity)
-- **Wordmark style:** `<TODO>` (e.g. "Just the name in the heading font, brand-primary color, no icon.")
+## 8. Out of scope (this hackathon)
 
-## 7. Out of scope (this hackathon)
-
-To keep design tight, the following are explicitly not part of `design-done`:
-
-- A dark mode toggle. Pick one mode and ship it.
-- Multiple themes. One brand, applied consistently.
-- Animations beyond a 200 ms fade on toast notifications.
-- A custom icon set. Use [Lucide icons](https://lucide.dev) via Tailwind classes if you need any.
+- Dark mode toggle. Graphite's dark palette is not used and its issues above are not our problem; we ship light only.
+- Multiple themes.
+- Animations beyond a 200 ms fade on toasts (respect `prefers-reduced-motion`).
+- Custom icon set. Use [Lucide](https://lucide.dev) (ships with shadcn).
 
 ---
 
-*DESIGN.md version: hackathon-starter v1*
+*DESIGN.md version: hackathon-starter v1 · filled in for the Graphite theme*
