@@ -1,14 +1,81 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource/fira-code/400.css';
+@import '@fontsource/fira-code/500.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-  height: 100%;
-}
+/*
+ * Design tokens — tweakcn "Graphite" (light only) with the accessibility
+ * overrides documented in DESIGN.md §2. Tailwind 3 reads these as var(--token),
+ * so opacity modifiers (bg-primary/50) are not available.
+ */
+@layer base {
+  :root {
+    --background: oklch(0.9551 0 0);
+    --foreground: oklch(0.3211 0 0);
+    --card: oklch(0.9702 0 0);
+    --card-foreground: oklch(0.3211 0 0);
+    --popover: oklch(0.9702 0 0);
+    --popover-foreground: oklch(0.3211 0 0);
+    --primary: oklch(0.4891 0 0);
+    --primary-foreground: oklch(1 0 0);
+    --secondary: oklch(0.9067 0 0);
+    --secondary-foreground: oklch(0.3211 0 0);
+    --muted: oklch(0.8853 0 0);
+    --accent: oklch(0.8078 0 0);
+    --accent-foreground: oklch(0.3211 0 0);
+    --destructive-foreground: oklch(1 0 0);
+    --ring: oklch(0.4891 0 0);
+    --radius: 0.35rem;
 
-body {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f8fafc; /* slate-50 */
-  color: #0f172a;            /* slate-900 */
+    /* Accessibility overrides of Graphite */
+    --muted-foreground: oklch(0.45 0 0);
+    --border: oklch(0.7 0 0);
+    --input: oklch(0.7 0 0);
+    --destructive: oklch(0.5 0.19 26);
+
+    /* Task type (M6) */
+    --type-feature: oklch(0.46 0.06 196);
+    --type-bug: oklch(0.5 0.19 26);
+
+    /* Due-date states (M8) */
+    --due-safe: oklch(0.46 0.11 150);
+    --due-warning: oklch(0.5 0.11 70);
+    --due-overdue: oklch(0.5 0.19 26);
+    --due-neutral: oklch(0.45 0 0);
+
+    /* Pale washes for due-date card tinting */
+    --due-safe-wash: oklch(0.96 0.03 150);
+    --due-warning-wash: oklch(0.96 0.05 80);
+    --due-overdue-wash: oklch(0.96 0.03 26);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans text-sm antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

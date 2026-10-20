@@ -1,117 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { DEFAULT_LISTS, SEED_TASKS, TEAM_NAME } from '@/lib/defaults';
+import Sidebar from '@/components/Sidebar';
+import Board from '@/components/Board';
 
 /**
- * Vibecoding Project Tracker — starter scaffold.
+ * Vibecoding Project Tracker.
  *
- * This file is intentionally almost empty. The boilerplate (Vite, React,
- * Tailwind) is configured for you, plus a few shared constants and a
- * localStorage helper. Everything visible on screen, you build.
- *
- * Where to start (build sequence in Phase 3):
- *   - M4  data-model    : render the four columns and the task cards below.
- *   - M5  crud-modal    : add the "+" button modal and the edit-on-click modal.
- *   - M6  tag-style     : feature vs. bug color coding (uses DESIGN.md §2 colors).
- *   - M7  task-owner    : assignee badge + "Hand off to..." dropdown.
- *   - M8  due-tint      : color cards by due date (uses DESIGN.md §2 due-state colors).
- *   - M9  context       : a curated Context briefing field on the modal.
- *   - M10 copy-prompt   : a "Copy as Prompt Context" button that serializes the task + context.
- *   - M11 anchors       : the Anchor Board above the Kanban.
- *   - M12 secret-sauce  : the one open-ended thing that makes your tracker yours.
- *
- * Search the file for `TODO M<n>` to find the right hook for each milestone.
+ * Landing view is the team's Kanban board (sidebar navigation on the left).
+ * Remaining hooks, by milestone:
+ *   - M5  crud-modal    : "+ Task" button and edit-on-click modal.
+ *   - M8  due-tint      : colour cards by due date.
+ *   - M9  context       : goals (prompt, tool, outcome) on the task modal.
+ *   - M10 copy-prompt   : "Copy as Prompt Context".
+ *   - M11 anchors       : Anchor Board.
+ *   - Manage lists      : add / rename / reorder / remove list entries.
  */
-
-/**
- * @typedef {Object} Task
- * @property {string} id
- * @property {string} title
- * @property {string} description
- * @property {'feature'|'bug'} type
- * @property {'todo'|'in-progress'|'review'|'done'} status
- * @property {string} assignee
- * @property {string|null} dueDate     ISO 'YYYY-MM-DD'
- * @property {string} createdDate      ISO 'YYYY-MM-DD'
- */
-
-// The four columns of the board, in render order.
-// Use these IDs everywhere — do not invent new ones.
-export const STAGES = [
-  { id: 'todo',        label: 'To Do' },
-  { id: 'in-progress', label: 'In Progress' },
-  { id: 'review',      label: 'Review' },
-  { id: 'done',        label: 'Done' },
-];
-
-// Replace these placeholders with the three names from PRD §8 before M4.
-// They become the only valid values for `Task.assignee`.
-export const TEAM = ['Teammate A', 'Teammate B', 'Teammate C'];
-
-/**
- * A tiny localStorage hook — survives reloads, no library needed.
- *
- * Usage:
- *   const [tasks, setTasks] = useLocalStorage('vibetracker.tasks', []);
- */
-export function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
-    try {
-      const raw = window.localStorage.getItem(key);
-      return raw != null ? JSON.parse(raw) : initialValue;
-    } catch {
-      return initialValue;
-    }
-  });
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch {
-      /* quota or private-mode error — silently ignore for hackathon */
-    }
-  }, [key, value]);
-
-  return [value, setValue];
-}
-
 export default function App() {
-  // TODO M4 data-model:
-  //   const [tasks, setTasks] = useLocalStorage('vibetracker.tasks', [/* 3-4 seed tasks */]);
-  //
-  // TODO M5 crud-modal:
-  //   const [editing, setEditing] = useState(null);
-  //
-  // TODO M11 anchors:
-  //   const [anchors, setAnchors] = useLocalStorage('vibetracker.anchors', [...]);
+  const [tasks] = useLocalStorage('vibetracker.tasks', SEED_TASKS);
+  const [lists] = useLocalStorage('vibetracker.lists', DEFAULT_LISTS);
+  const [collapsed, setCollapsed] = useLocalStorage('vibetracker.sidebarCollapsed', false);
 
   return (
-    <div className="min-h-screen p-6">
-      <header className="mb-6 flex items-end justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">
-            Vibecoding Project Tracker
-          </h1>
-          <p className="text-sm text-slate-500">
-            {/* Replace this line with your team name from PRD §11. */}
-            Team starter
-          </p>
-        </div>
-      </header>
+    <div className="flex h-full">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground"
+      >
+        Skip to main content
+      </a>
 
-      {/* TODO M11 anchors: render the Anchor Board (Presentation / Demo / Report / Documentation) above the board. */}
+      <Sidebar
+        teamName={TEAM_NAME}
+        collapsed={collapsed}
+        onToggle={() => setCollapsed((c) => !c)}
+      />
 
-      {/*
-        TODO M4 data-model:
-          Render a Kanban board with the four columns from STAGES.
-          Each column should display the tasks whose status matches its id.
-          Pre-populate 3-4 mock tasks so the board isn't empty on first load.
-
-        TODO M5 crud-modal:
-          Add a "+" button that opens a modal with every Task field.
-          Clicking a card should open the same modal in edit mode.
-      */}
-      <main className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-slate-300 text-slate-400">
-        Build the four-column board here · M4
-      </main>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex h-14 shrink-0 items-center justify-between border-b px-6">
+          <h1 className="text-2xl font-semibold">Board</h1>
+          {/* M5: "+ Task" button goes here. */}
+        </header>
+        <main id="main" tabIndex={-1} className="min-h-0 flex-1 p-6">
+          <Board columns={lists.columns} tasks={tasks} types={lists.types} />
+        </main>
+      </div>
     </div>
   );
 }
