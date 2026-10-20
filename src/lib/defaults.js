@@ -22,6 +22,19 @@ export const DEFAULT_LISTS = {
   ],
 };
 
+// The four deliverable slots on the Anchor Board (M11, PRD §5 `Anchor`). Fixed set.
+// One link is filled in so the feature shows on first open (PRD DR-10).
+export const DEFAULT_ANCHORS = [
+  { id: 'presentation', label: 'Presentation', url: null },
+  { id: 'demo', label: 'Demo', url: null },
+  { id: 'report', label: 'Report', url: null },
+  {
+    id: 'documentation',
+    label: 'Documentation',
+    url: 'https://github.com/grzegorzkibitz/vibecoding-project-tracker',
+  },
+];
+
 // Placeholders until PRD §8 / §11 are filled in.
 export const TEAM_NAME = 'Your team';
 export const TEAM = ['Teammate A', 'Teammate B', 'Teammate C'];
@@ -54,7 +67,28 @@ export const SEED_TASKS = [
     assignee: TEAM[1],
     dueDate: iso(-1),
     createdDate: iso(-3),
-    goals: [],
+    // Demo goal history (PRD DR-10): several goals, mixed outcomes.
+    goals: [
+      {
+        id: 'seed-2-g1',
+        prompt: 'The modal in TaskDialog.jsx does not close when I press Escape. Fix it.',
+        tool: 'chatgpt',
+        outcome: 'failed',
+        notes: 'Added a keydown listener on window. Two listeners fought each other and the modal still stayed open.',
+        createdAt: `${iso(-3)}T10:00:00.000Z`,
+        updatedAt: `${iso(-3)}T10:20:00.000Z`,
+      },
+      {
+        id: 'seed-2-g2',
+        prompt:
+          'We use Radix Dialog with shadcn. Escape works on the first open but not after editing a field. Here is TaskDialog.jsx: ... Why?',
+        tool: 'claude',
+        outcome: 'partial',
+        notes: 'Found that a field stops the key event. Works for text inputs, still broken in the date picker.',
+        createdAt: `${iso(-2)}T14:00:00.000Z`,
+        updatedAt: `${iso(-2)}T14:45:00.000Z`,
+      },
+    ],
   },
   {
     id: 'seed-3',

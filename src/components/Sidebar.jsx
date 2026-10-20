@@ -1,14 +1,28 @@
-import { KanbanSquare, Anchor, ListChecks, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import {
+  KanbanSquare, Anchor, ListChecks, PanelLeftClose, PanelLeftOpen, FolderKanban, Plus, Settings,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Only the board exists so far; the rest are placeholders for later milestones.
+// `soon` items are placeholders for later milestones. `action` items open a dialog.
+// Anchors sit above the board on the same page, so that link jumps to them.
 const ITEMS = [
   { id: 'board', label: 'Board', icon: KanbanSquare },
-  { id: 'anchors', label: 'Anchors', icon: Anchor, soon: true },
-  { id: 'lists', label: 'Manage lists', icon: ListChecks, soon: true },
+  { id: 'anchors', label: 'Deliverables', icon: Anchor },
+  { id: 'lists', label: 'Manage lists', icon: ListChecks, action: true },
 ];
 
-export default function Sidebar({ teamName, collapsed, onToggle, current = 'board' }) {
+export default function Sidebar({
+  teamName,
+  collapsed,
+  onToggle,
+  onManageLists,
+  projects,
+  currentProject,
+  onOpenProject,
+  onNewProject,
+  onProjectSettings,
+  current = 'board',
+}) {
   return (
     <aside
       className={cn(
@@ -29,10 +43,78 @@ export default function Sidebar({ teamName, collapsed, onToggle, current = 'boar
         )}
       </div>
 
+      {/* Project switcher. Collapsed: one button that shows the project and expands the sidebar. */}
+      <div className="border-b p-2">
+        {collapsed ? (
+          <button
+            type="button"
+            onClick={onToggle}
+            title={`Project: ${currentProject.name}`}
+            className="flex min-h-10 w-full items-center justify-center rounded-md hover:bg-secondary"
+          >
+            <FolderKanban aria-hidden="true" className="size-4" />
+            <span className="sr-only">Project: {currentProject.name}. Expand the sidebar to switch project.</span>
+          </button>
+        ) : (
+          <div className="space-y-1.5 px-1">
+            <label htmlFor="project-switcher" className="block text-xs font-medium text-muted-foreground">
+              Project
+            </label>
+            <select
+              id="project-switcher"
+              value={currentProject.id}
+              onChange={(e) => onOpenProject(e.target.value)}
+              className="h-10 w-full truncate rounded-md border border-input bg-card px-2 text-sm font-medium"
+            >
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={onNewProject}
+                aria-haspopup="dialog"
+                className="flex min-h-8 flex-1 items-center gap-2 rounded-md px-2 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground"
+              >
+                <Plus aria-hidden="true" className="size-3.5" />
+                New project
+              </button>
+              <button
+                type="button"
+                onClick={onProjectSettings}
+                aria-haspopup="dialog"
+                aria-label={`Settings for ${currentProject.name}`}
+                title="Project settings"
+                className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground"
+              >
+                <Settings aria-hidden="true" className="size-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       <nav aria-label="Main" className="flex-1 p-2">
         <ul className="space-y-1">
-          {ITEMS.map(({ id, label, icon: Icon, soon }) => {
+          {ITEMS.map(({ id, label, icon: Icon, soon, action }) => {
             const active = id === current;
+            if (action) {
+              return (
+                <li key={id}>
+                  <button
+                    type="button"
+                    onClick={onManageLists}
+                    aria-haspopup="dialog"
+                    title={collapsed ? label : undefined}
+                    className="flex min-h-10 w-full items-center gap-3 rounded-md px-3 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  >
+                    <Icon aria-hidden="true" className="size-4 shrink-0" />
+                    <span className={cn('truncate', collapsed && 'sr-only')}>{label}</span>
+                  </button>
+                </li>
+              );
+            }
             return (
               <li key={id}>
                 <a

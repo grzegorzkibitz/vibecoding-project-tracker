@@ -1,0 +1,397 @@
+Assessment Proforma 2026-27
+Key Information
+Module Code
+
+CM6312 / CM6812
+
+Module Title
+
+Adopting Technologies
+
+Module Leader
+
+Dr Fernando Loizides
+
+Module Moderator
+
+Dr Charith Perera
+
+Assessment Title
+
+Requirements and Prototyping
+
+Assessment Number
+
+Assessment 1 of 2
+
+Assessment Weighting
+
+This assessment counts towards 50% of the module
+
+Assessment Limits
+
+Wordcount: written report of a maximum of 2,000 words, plus
+an interactive prototype; Time limit: N/A
+
+Feedback type
+
+Individual
+
+The due date and time for this assessment are specified in the ‘Assessment & Feedback’
+folder for this module on Learning Central. To view these, click on the assessment’s link,
+which will open ‘Details & Information’ section for this assessment. Alternatively, go to
+‘Calendar’ section of a module, and select ‘Due Dates’ option. You can change the view to
+daily or monthly, as well as use arrows to navigate the calendar.
+
+The COMAT COMSC Assessment Calendar for all assessments is also available on
+Learning Central: by going to Organisations -> COMAT School -> Assessment &
+Feedback folder -> COMAT COMSC Assessment Calendar 2026 - 27 page.
+
+Page 2 of 10mm
+
+Learning Outcomes
+The learning outcomes for this assessment are as follows:
+•
+•
+
+LO1: Identify stakeholders and elicit their requirements for product development.
+LO2: Employ specialised techniques to turn requirements to medium or high-fidelity
+prototypes.
+
+Page 3 of 10mm
+
+Submission Instructions
+All assessment files should be submitted via the ‘Assessment & Feedback’ folder for this
+module on Learning Central.
+Before submitting your assessment, you must complete and submit the ‘Assessment
+Coversheet’ form. Further instructions are given in the ‘Assessment & Feedback’ folder on
+Learning Central.
+Your submission for this assessment should contain the following file(s):
+Description
+
+Compulsory
+or Optional?
+
+Type
+
+Name
+
+Coversheet
+
+Compulsory
+
+One PDF (.pdf)
+file
+
+Coversheet.pdf
+
+Report
+
+Compulsory
+
+One PDF (.pdf)
+file
+
+[student name and
+surname-2].pdf
+
+Interactive
+Prototype
+
+Compulsory
+
+One link or APK
+N/A
+file. Note: no
+subscription or
+registration should
+be needed for the
+assessor to mark
+this.
+
+Important information on assessment submission:
+•
+
+•
+•
+
+•
+
+Submit your work well before the deadline - do not leave it up until the very last
+moment. You need to allocate extra time to check your submitted file(s) are correct
+and readable. To do this:
+▪ after submitting your work and obtaining a submission receipt, return to the
+submission point, download your submitted file(s), and check that they are
+exactly the files you intended to submit. You should also check that the file
+size indicated in your submission receipt matches the total file size of all
+documents uploaded.
+Re-submit if the file(s) are wrong or unreadable. Please note: submitting correct and
+complete files by the deadline is your responsibility.
+Any deviation from the submission instructions above, including the number and
+types of files submitted or submitting incomplete or unreadable files, may result in a
+mark of zero for the assessment or question part. Staff reserve the right to invite
+students to a meeting to discuss coursework submissions.
+If you are unable to submit your work, email the module leader with explanation of
+issues experienced. If the technical issue is with Cardiff University systems, also
+report it to the University IT Support: email it-support@cardiff.ac.uk, tel. +44 (0)29
+2251 1111.
+
+Page 4 of 10mm
+
+Assessment Description
+You will be given a specific topic in class to use for your coursework. You will also be
+assigned into teams in class for discussion and production purposes. This is an individual
+submission. The module leader or other lecturers will act as the stakeholders for your project
+and as the client. There may also be a real-world client for your project.
+You are to create a portfolio involving all the requirements stages and a prototype. Note:
+previous cohort submissions have shown that there is a strong correlation between students’
+engagement time in the lesson and grade levels, so you are highly encouraged to attend
+both the team meetings as well as the opt-in one-to-ones.
+The report should be separated into the following parts:
+
+Part 1: Requirements
+Stakeholders (3%)
+Firstly, identify all the stakeholders with a description. Justify why you chose these
+stakeholders.
+Persona of one stakeholder (7%)
+Choose one of your main stakeholders and bring them out in a persona.
+Functional requirements (5%)
+Once these stakeholders are identified you need to identify functional requirements. Be
+thorough. Requirements are vital to be identified early on as these will then act as the
+threshold of whether you have successfully been able to create a solution that solves the
+initial problem for the client. Therefore, once you identify the requirements, understand and
+mark which are the ones that will be needed for a minimum viable product (MVP) to occur.
+Label these with a unique identifier to be used later.
+Non-functional requirements (5%)
+Thoroughly identify the non-functional requirements and justify why these are needed. Label
+each with a unique identifier. Mark which ones will be needed for a minimum viable product
+(MVP) to be reached.
+Data requirements (5%)
+Thoroughly identify the data requirements for the project. Justify why these data
+requirements are needed and go into detail about what is needed and from where you will
+collate this information. Label these with a unique identifier to be used later. Mark which are
+the ones that will be needed for a minimum viable product (MVP) to occur.
+
+Page 5 of 10mm
+
+Part 2: Prototyping
+Medium Fidelity Prototype (20%)
+You will then create a clickable, interactive prototype. This prototype will require full
+interaction in terms of all the individual requirements and how they are implemented. All
+features should be functional. This is not to say if the database is supposed to have 300
+clients you will need to create working profiles for each one of them, but a profile for one of
+them needs to be clearly shown to work with all the features. You need to show why each
+component is there (use requirements to map them to the features) and, if there are more
+than the requirements-based components, to justify correctly why you added the
+components. Describe the User Experience (UX) principles in detail on the decision you
+made to integrate good usability in the interface.
+In your report, put screenshots showing the reasoning behind the designs and interaction
+while also giving a clear link to the working prototype for marking. Please make sure that the
+lecturer has access when clicking the link and does not have to register to access it. Any link
+is accepted, such as a hosted URL, a shared link from the prototyping tool you used, a
+Dropbox or MS Office link, and others.
+This year, prototypes will be created using AI rapid prototyping tools such as Google
+Antigravity, Gemini, Claude and other similar AI tools. The majority of the prototype will be
+started in an all-day hackathon in Week 3 (see Hackathon participation below). You can
+continue to develop and refine your prototype after the hackathon. Please note no IT support
+will be provided for tools other than those covered in class. Please do not buy any software,
+subscriptions or add-ons for any of this coursework.
+Use of AI tools to create the prototype is explicitly permitted for this assessment. You
+must state in your report which tools you used and how you used them. The written report
+itself remains subject to the general AI guidance in this document.
+Hackathon participation (5%)
+5% is awarded for your participation in the all-day hackathon in Week 3, where you will start
+building your prototype.
+
+Page 6 of 10mm
+
+Assessment Criteria
+Part 1: Requirements
+High
+Distinction
+80%+
+
+Distinction
+70-79%
+
+Merit
+60-69%
+
+Pass
+50-59%
+
+To get the higher marks, you are expected to fulfil the criteria for a
+Distinction in all aspects. Furthermore, it is expected to go beyond the
+simple slides and lesson teachings and show a good comprehension of the
+literature you were advised to read and research in techniques that are
+referenced within those works. Identifying suitable related work which has
+not been given to you and referencing / using it in the correct context to
+fulfil your coursework is vital.
+1. Provides excellent explanations of all the requirements elicitation.
+2. Gives clear and convincing reasons for selecting the chosen
+requirements.
+3. The requirements are correctly identified and in the right requirements
+type.
+4. All the requirements are identified.
+5. Identifies and justifies all the stakeholders with clear reasoning as to
+why each is selected.
+6. Persona is correctly identified and contains all the important sections
+correctly.
+7. Excellent coverage of references to appropriate related work and
+literature.
+1. Adequate requirements are correctly identified.
+2. Provides almost all of explanations of all the requirements elicitation.
+3. Gives clear and convincing reasons for selecting the chosen
+requirements.
+4. The requirements are correctly identified and almost all are in the right
+requirements type.
+5. Identifies and justifies all the stakeholders with clear reasoning as to
+why each is selected.
+6. Persona is correctly identified and contains all the important sections
+correctly (minor mistakes).
+7. Good references to appropriate related work and literature.
+1. Provides most explanations of all the requirements elicitation.
+2. Gives clear and convincing reasons for selecting the chosen
+requirements.
+3. The requirements are correctly identified, and almost all are in the right
+requirements type.
+4. Identifies and justifies all the stakeholders with clear reasoning as to
+why each is selected.
+5. Persona is correctly identified and contains all the important sections
+correctly (some mistakes).
+6. Adequate but not thorough references to appropriate related work and
+literature.
+
+Page 7 of 10mm
+
+Marginal
+Fail
+40-49%
+
+Fail
+0-39%
+
+1. Provides some explanations of all the requirements elicitation.
+2. Gives some convincing reasons for selecting the chosen requirements.
+3. The requirements are correctly identified, and most are in the right
+requirements type.
+4. Identifies and justifies some of the stakeholders with clear reasoning
+as to why each is selected.
+5. Persona is mostly correctly identified and contains most of the
+important sections correctly (some mistakes).
+6. Adequate but not thorough references to appropriate related work and
+literature, with no justification of why it is relevant.
+1. Does not provide adequate explanations of all the requirements
+elicitation.
+2. Gives few or no clear and convincing reasons for selecting the chosen
+requirements.
+3. The requirements are incorrectly identified and in the wrong
+requirements type.
+4. Few or no requirements are identified.
+5. Persona is a wrong representation of a stakeholder, or lacks sections
+and information.
+6. Inadequate, or no, references.
+
+Part 2: Prototyping
+High
+Distinction
+80%+
+
+Distinction
+70-79%
+
+To get the higher marks, you are expected to fulfil the criteria for a
+Distinction in all aspects. Furthermore, it is expected to go beyond the
+simple slides and lesson teachings and show a good comprehension of the
+literature you were advised to read and research in techniques that are
+referenced within those works. Identifying suitable related work which has
+not been given to you and referencing / using it in the correct context to
+fulfil your coursework is vital.
+1. Excellent medium fidelity prototype used with effective interaction.
+Thorough justification of the choices in the design principles used to
+create the prototype correctly.
+2. Thorough justification of the interaction behaviours chosen.
+3. Fully clickable and complete digital prototype with all the requirements
+(including the non-MVP) justified and included.
+4. No excess requirements that are unjustified.
+5. Excellent coverage of references to appropriate related work and
+literature.
+
+Page 8 of 10mm
+
+Merit
+60-69%
+
+Pass
+50-59%
+
+Marginal
+Fail
+40-49%
+
+Fail
+0-39%
+
+1. Provides good justification of choices of functionality within the rapid
+prototype. Good medium fidelity prototype used with mostly effective
+and working interaction.
+2. Contains most of the justification of the choices in the design principles
+used to create the prototype correctly.
+3. Good justification of the interaction behaviours chosen.
+4. Fully clickable and complete digital prototype with some of the
+requirements justified and included as functionality. Some excess
+requirements that are unjustified.
+5. Good references to appropriate related work and literature.
+1. Provides good justification of choices of functionality within the rapid
+prototype. Good medium fidelity prototype used with mostly effective
+and working interaction.
+2. Contains most of the justification of the choices in the design principles
+used to create the prototype correctly.
+3. Adequate justification of most of the interaction behaviours chosen.
+4. Mostly clickable and mostly complete digital prototype with most of the
+requirements justified and included. Contains excess requirements that
+are unjustified.
+5. Adequate but not thorough references to appropriate related work and
+literature.
+1. Provides adequate justification of choices of functionality within the
+rapid prototype. Adequate medium fidelity prototype used with mostly
+effective and working interaction.
+2. Contains most of the justification of the choices in the design principles
+used to create the prototype correctly.
+3. Adequate justification of most of the interaction behaviours chosen.
+4. Contains clickable functionality to an extent, but not a complete digital
+prototype, with most of the requirements partly justified and included.
+Can contain excess requirements that are unjustified.
+5. Adequate but not thorough references to appropriate related work and
+literature.
+1. No, or almost no, justification of choices of functionality within the rapid
+prototype.
+2. Missing or minimal medium fidelity prototype, with substantial
+interaction ineffective or missing.
+3. Contains no, or minimal, justification of the choices in the design
+principles used to create the prototype.
+4. None or minimal justification of most of the interaction behaviours
+chosen.
+5. Non-complete digital prototype with substantial requirements missing.
+Contains excess requirements that are unjustified.
+6. Inadequate or no references (including incorrect references).
+
+Hackathon participation (5%)
+Marks are awarded for attending and actively taking part in the all-day Week 3 hackathon.
+
+Page 9 of 10mm
+
+Help and Support
+Support for completing the assessment is available in drop-in sessions during the
+assessment period. Dedicated Q&A sessions will also be arranged during the assessment
+period.
+
+Feedback
+Feedback on your coursework will address the above assessment criteria. Feedback and
+marks will be returned via Learning Central in accordance with the University’s Academic
+Feedback Policy.
+Feedback from this assignment will be useful for CM6311 Large Team Project.
+
+Page 10 of 10mm
+
+

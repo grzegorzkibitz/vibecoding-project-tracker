@@ -80,12 +80,12 @@ Everything else stays exactly as in Graphite.
 
 | Token | Value | Contrast on card | When used |
 |---|---|---|---|
-| `due-safe` | `oklch(0.46 0.11 150)` | 6.2 | More than 2 days out |
-| `due-warning` | `oklch(0.50 0.11 70)` | 5.6 | Less than 24 hours |
-| `due-overdue` | `oklch(0.50 0.19 26)` | 6.1 | Past due |
-| `due-neutral` | `oklch(0.45 0 0)` | 5.3 | Done (overrides date) |
+| `due-safe` | `oklch(0.46 0.11 150)` | 6.2 | Due in 2 or more days ("Due in 3d") |
+| `due-warning` | `oklch(0.50 0.11 70)` | 5.6 | Due today or tomorrow |
+| `due-overdue` | `oklch(0.50 0.19 26)` | 6.1 | Past due ("Overdue 2d") |
+| `due-neutral` | `oklch(0.45 0 0)` | 5.3 | Task is in a done column (overrides date) |
 
-Colour is used for the text, stripe and icon of a state, never as the only signal. The tint is a pale background wash. Each state also carries a label ("Due today", "Overdue 2d") so it works in greyscale.
+Due dates are whole days, so the rules count calendar days, not hours (`src/lib/due.js`). Colour is used for the date text and icon of a state, never as the only signal; the left stripe stays the task type. The tint is a pale background wash on the card. Each state also has its own icon and label ("Due today", "Overdue 2d") so it works in greyscale.
 
 ## 4. Typography
 

@@ -14,3 +14,19 @@ Record of every prompt given in this project, with date and model used.
 | 8 | 2026-10-20 | Sonnet 5.5 | I meant the dashboard will jump you straight into your teams kanban board. use a sidebar |
 | 9 | 2026-10-20 | Sonnet 5.5 | What is M5? |
 | 10 | 2026-10-20 | Sonnet 5.5 | Is thr data model for thr column boards created? |
+| 11 | 2026-10-20 | Sonnet 5.5 | Yes |
+| 12 | 2026-10-20 | Sonnet 5.5 | now do M5 |
+| 13 | 2026-10-20 | Sonnet 5.5 | Write a stages.md to keep track of whats done and whats next to do |
+| 14 | 2026-10-20 | Opus 5.5 | Read the assessment.txt. This project will tie in direcrtly with this assessment that I need to complete.; create a assessment guide that I can follow to ensure I have all the material required for the assessment for a 1st / top grade. |
+| 15 | 2026-10-20 | Opus 5.5 | write my 3. Part 1: Requirements (1. Stakeholders 2. Persona 3. Functional requirements 4. Non-functional requirements 5. Data requirements) in my prd document about this project |
+| 16 | 2026-10-20 | Opus 5.5 | continue building the app with the next step |
+| 17 | 2026-10-20 | Opus 5.5 | NEXT |
+| 18 | 2026-10-20 | Opus 5.5 | next |
+| 19 | 2026-10-20 | Opus 5.5 | next |
+| 20 | 2026-10-20 | Opus 5.5 | next |
+| 21 | 2026-10-20 | Opus 5.5 | next. Before you continue, implement github oauth so that we can have users in the app. a user can select a team and go from there and see the kanban team from there |
+| 22 | 2026-10-20 | Opus 5.5 | next m7 |
+| 23 | 2026-10-20 | Opus 5.5 | Allow the kanban card to be dragged into another column and change the status of the card |
+| 24 | 2026-10-20 | Opus 5.5 | yes. Is this still accisbility compliant? |
+| 25 | 2026-10-20 | Opus 5.5 | Add multi project support |
+| 26 | 2026-10-20 | Opus 5.5 | implement the project selection |

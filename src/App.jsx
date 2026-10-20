@@ -1,24 +1,30 @@
+import { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { DEFAULT_LISTS, SEED_TASKS, TEAM_NAME } from '@/lib/defaults';
+import { useProjects } from '@/hooks/useProjects';
+import { TEAM_NAME } from '@/lib/defaults';
+import { Toaster, toast } from '@/components/ui/sonner';
 import Sidebar from '@/components/Sidebar';
-import Board from '@/components/Board';
+import ProjectWorkspace from '@/components/ProjectWorkspace';
+import ProjectDialog from '@/components/ProjectDialog';
 
 /**
  * Vibecoding Project Tracker.
  *
- * Landing view is the team's Kanban board (sidebar navigation on the left).
- * Remaining hooks, by milestone:
- *   - M5  crud-modal    : "+ Task" button and edit-on-click modal.
- *   - M8  due-tint      : colour cards by due date.
- *   - M9  context       : goals (prompt, tool, outcome) on the task modal.
- *   - M10 copy-prompt   : "Copy as Prompt Context".
- *   - M11 anchors       : Anchor Board.
- *   - Manage lists      : add / rename / reorder / remove list entries.
+ * Shell: sidebar (with the project switcher) + the open project's workspace
+ * (deliverable links above its Kanban board).
  */
 export default function App() {
-  const [tasks] = useLocalStorage('vibetracker.tasks', SEED_TASKS);
-  const [lists] = useLocalStorage('vibetracker.lists', DEFAULT_LISTS);
+  const projects = useProjects();
   const [collapsed, setCollapsed] = useLocalStorage('vibetracker.sidebarCollapsed', false);
+  const [managingLists, setManagingLists] = useState(false);
+  // null = closed, 'new' = create, 'settings' = rename / delete the open project.
+  const [projectDialog, setProjectDialog] = useState(null);
+
+  const openProject = (id) => {
+    // Undo buttons on old toasts belong to the previous project.
+    toast.dismiss();
+    projects.open(id);
+  };
 
   return (
     <div className="flex h-full">
@@ -33,17 +39,32 @@ export default function App() {
         teamName={TEAM_NAME}
         collapsed={collapsed}
         onToggle={() => setCollapsed((c) => !c)}
+        onManageLists={() => setManagingLists(true)}
+        projects={projects.projects}
+        currentProject={projects.current}
+        onOpenProject={openProject}
+        onNewProject={() => setProjectDialog('new')}
+        onProjectSettings={() => setProjectDialog('settings')}
       />
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center justify-between border-b px-6">
-          <h1 className="text-2xl font-semibold">Board</h1>
-          {/* M5: "+ Task" button goes here. */}
-        </header>
-        <main id="main" tabIndex={-1} className="min-h-0 flex-1 p-6">
-          <Board columns={lists.columns} tasks={tasks} types={lists.types} />
-        </main>
-      </div>
+      <ProjectWorkspace
+        key={projects.current.id}
+        project={projects.current}
+        managingLists={managingLists}
+        onCloseLists={() => setManagingLists(false)}
+      />
+
+      {projectDialog && (
+        <ProjectDialog
+          mode={projectDialog}
+          project={projects.current}
+          manager={projects}
+          onClose={() => setProjectDialog(null)}
+          onDone={() => toast.dismiss()}
+        />
+      )}
+
+      <Toaster />
     </div>
   );
 }
