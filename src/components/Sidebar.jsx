@@ -1,5 +1,5 @@
 import {
-  KanbanSquare, Anchor, ListChecks, PanelLeftClose, PanelLeftOpen, FolderKanban, Plus, Settings, Users,
+  KanbanSquare, Anchor, ListChecks, PanelLeftClose, PanelLeftOpen, FolderKanban, Plus, Settings, Users, RotateCcw,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -28,6 +28,19 @@ function jumpTo(e, id) {
   void el.offsetWidth; // restart the highlight if clicked again
   el.classList.add('jump-highlight');
   setTimeout(() => el.classList.remove('jump-highlight'), 1500);
+}
+
+/** Wipe every saved tracker key and reload, so the app starts from its demo data. */
+function resetDemo() {
+  if (!window.confirm('Reset the demo? All projects, tasks and settings will be restored to the defaults.')) return;
+  try {
+    Object.keys(window.localStorage)
+      .filter((k) => k.startsWith('vibetracker.'))
+      .forEach((k) => window.localStorage.removeItem(k));
+  } catch {
+    // storage unavailable: reload anyway
+  }
+  window.location.reload();
 }
 
 export default function Sidebar({
@@ -181,6 +194,15 @@ export default function Sidebar({
             <PanelLeftClose aria-hidden="true" className="size-4 shrink-0" />
           )}
           <span className={cn(collapsed && 'sr-only')}>Collapse</span>
+        </button>
+        <button
+          type="button"
+          onClick={resetDemo}
+          title={collapsed ? 'Reset demo' : undefined}
+          className="flex min-h-10 w-full items-center gap-3 rounded-md px-3 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground"
+        >
+          <RotateCcw aria-hidden="true" className="size-4 shrink-0" />
+          <span className={cn('truncate', collapsed && 'sr-only')}>Reset demo</span>
         </button>
       </div>
     </aside>
